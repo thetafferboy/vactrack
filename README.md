@@ -1,7 +1,7 @@
 # vactrack.py
-## Track UK COVID population vaccine progress and automatically tweet progress
+## Track UK COVID population 1st and 2nd dose vaccine progress and automatically tweet progress as %
 
-![tweeting vaccination results](https://i.imgur.com/byojRqH.png)
+![tweeting vaccination results](https://i.imgur.com/VQim7Ib.png)
 
 
 Install requirements:
