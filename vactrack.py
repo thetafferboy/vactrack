@@ -4,6 +4,7 @@
 
 import pandas as pd
 import tweepy
+import math
 from datetime import datetime
 
 # Twitter authorisation - you need to fill in your own API details (https://dev.twitter.com)
@@ -30,12 +31,14 @@ data_read = pd.read_csv(
 def AddDataToTweet(dataValue, textValue):
     dataToAdd = ''
     total_vacs = data_read.loc[data_read.date == date_to_check, dataValue].values[0]
-    perc_rounded = round( ((total_vacs / population_of_uk) * 100),2)
 
-    solid_bars_to_print = perc_rounded // perc_per_bar
+    perc_rounded = round(((total_vacs / population_of_uk) * 100), 2)
+
+    solid_bars_to_print = math.ceil(perc_rounded / perc_per_bar)
     empty_bars_to_print = bar_total - solid_bars_to_print
 
     dataToAdd += textValue
+
     while solid_bars_to_print > 0:
         dataToAdd += '▓'
         solid_bars_to_print -=1
