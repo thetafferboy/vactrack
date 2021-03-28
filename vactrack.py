@@ -2,25 +2,26 @@
 
 # vactrack.py code by @thetafferboy
 
+from datetime import date, timedelta
 import pandas as pd
 import tweepy
-import math
 from datetime import datetime
 
 # Twitter authorisation - you need to fill in your own API details (https://dev.twitter.com)
-auth = tweepy.OAuthHandler("consumer_key", "consumer_secret")
-auth.set_access_token("access_token", "access_token_secret")
+auth = tweepy.OAuthHandler("",
+                           "")
+auth.set_access_token("-",
+                      "")
 api = tweepy.API(auth)
 
 # You can change population of UK if you wish, which will change % calculations
-population_of_uk = 66650000
+population_of_uk = 52632729
 
 # How many blocks you want in progress bar, 15 works well with Twitter ▓▓▓▓▓░░░░░░░░░░
 bar_total = 15
 perc_per_bar = 100/bar_total
 
 # This sets date to 2 days ago, as there is a lag in government data reporting. API requests will fail if you request date which has no data yet
-from datetime import date, timedelta
 date_to_check = (date.today() - timedelta(2)).isoformat()
 
 # GOV UK data source API:
@@ -30,18 +31,17 @@ data_read = pd.read_csv(
 
 def AddDataToTweet(dataValue, textValue):
     dataToAdd = ''
-    total_vacs = data_read.loc[data_read.date == date_to_check, dataValue].values[0]
-
+    total_vacs = data_read.loc[data_read.date ==
+                               date_to_check, dataValue].values[0]
     perc_rounded = round(((total_vacs / population_of_uk) * 100), 2)
 
-    solid_bars_to_print = math.ceil(perc_rounded / perc_per_bar)
+    solid_bars_to_print = perc_rounded // perc_per_bar
     empty_bars_to_print = bar_total - solid_bars_to_print
 
     dataToAdd += textValue
-
     while solid_bars_to_print > 0:
         dataToAdd += '▓'
-        solid_bars_to_print -=1
+        solid_bars_to_print -= 1
 
     while empty_bars_to_print > 0:
         dataToAdd += '░'
@@ -60,6 +60,8 @@ def SourceAndSendTweet(stringToTweet):
 
 
 stringToTweet = ''
-stringToTweet += AddDataToTweet('cumPeopleVaccinatedFirstDoseByPublishDate','1st dose of vaccine progress: \n\n')
-stringToTweet += AddDataToTweet('cumPeopleVaccinatedSecondDoseByPublishDate','2nd dose of vaccine progress: \n\n')
+stringToTweet += AddDataToTweet('cumPeopleVaccinatedFirstDoseByPublishDate',
+                                '1st dose of vaccine progress: \n\n')
+stringToTweet += AddDataToTweet('cumPeopleVaccinatedSecondDoseByPublishDate',
+                                '2nd dose of vaccine progress: \n\n')
 SourceAndSendTweet(stringToTweet)
