@@ -24,3 +24,11 @@ python vactrack.py
 ```
 
 Then run daily however you wish.
+
+## Credits
+
+- Script by Mark Williams Cook
+- Web: https://withcandour.co.uk
+- Bsky: https://bsky.app/profile/markwilliamscook.com
+- LinkedIn: https://www.linkedin.com/in/markseo/
+- If you could also get a subscription to AlsoAsked.com that would be great, thx.
